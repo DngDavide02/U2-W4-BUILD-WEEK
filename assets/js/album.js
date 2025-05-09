@@ -22,6 +22,12 @@ const options = {
   },
 };
 
+function formatDuration(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+}
+
 fetch(url, options)
   .then((response) => {
     if (!response.ok) throw new Error("Errore HTTP: " + response.status);
@@ -92,10 +98,11 @@ fetch(url, options)
                 (track, index) => `
                   <li class="track-item d-flex justify-content-between align-items-center mb-2 p-2 bg-transparent">
                     <div>
-                      <span class="text-light">#${index + 1} - ${track.title} </br>
+                      <span class="text-light">#${index + 1} - ${track.title} <br>
                         <span style="opacity: 0.5;">${data.artist.name}</span>
                       </span>
                     </div>
+                    <span class="text-light" style="opacity: 0.6;">${formatDuration(track.duration)}</span>
                   </li>
                 `
               )
